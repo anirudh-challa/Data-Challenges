@@ -1,0 +1,90 @@
+---
+title: "ex"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r a,echo=TRUE}
+#Data
+y <- read.csv(file="C:/Users/Anirudh/Desktop/interestrate.csv", header = FALSE)$V1
+
+
+#Parameters
+eta = - 3
+tau2 = 1
+a = 2
+b = 10 #from expectation of sigma2
+
+yt = 0.0
+ytprev = 0.0
+for(x in 1:100){
+  ytprev = ytprev + y[x]
+}
+
+for(x in 2:101){
+  yt = yt + y[x]
+}
+
+
+rrr = 10000
+
+mu.out     = rep(0, rrr)
+sigma2.out = rep(0, rrr)
+rho.out    = rep(0, rrr)
+
+mu = mean(y)
+sigma2 = var(y)
+rho = 1
+
+for(ss in 1:rrr){
+  s = 0.0
+  ytmu = 0.0
+  ytprevmu = 0.0
+  mut = 0.0
+  ytprevmu2 = 0.0
+  ymu = 0.0
+  for(x in 1:100){
+    s = s + (y[x+1]-mu-rho*(y[x]-mu))*(y[x+1]-mu-rho*(y[x]-mu))
+    ytmu = ytmu + (y[x+1]-mu)
+    ytprevmu = ytprevmu + (y[x] - mu)
+    ytprevmu2 = ytprevmu2 + (y[x] - mu)*(y[x] - mu)
+    ymu = ymu +  (y[x] - mu)*(y[x+1] - mu)
+    mut = mut + (y[x+1] -(rho*y[x]))
+    } 
+  
+  mu     = rnorm(1,((eta/tau2) + (1- rho)*(mut/sigma2))/(( (100*(1-rho)*(1-rho))/sigma2) + (1/tau2)), sqrt(1/( ((100*(1-rho)*(1-rho))/sigma2) + (1/tau2)) ))
+  sigma2 = invgamma::rinvgamma(1, a+50, (1/b) + (s/2))
+  rho = msm::rtnorm(1, mean = (((ymu))/(ytprevmu2)), sd = sqrt(sigma2/ytprevmu2), lower = -1, upper = 1)
+  mu.out[ss]     = mu
+  sigma2.out[ss] = sigma2
+  rho.out[ss]    = rho
+}
+```
+
+```{r b, echo=TRUE}
+hist(mu.out)
+```
+
+```{r c, echo=TRUE}
+hist(sigma2.out)
+```
+
+```{r d, echo=TRUE}
+hist(rho.out)
+```
+
+
+```{r e, echo=TRUE}
+plot(y, ylim = c(-5, 0))
+abline(h = mean(mu.out), col="blue")
+abline(h = quantile(mu.out, c(.025)), lty = 2 ,col = "blue")
+abline(h = quantile(mu.out, c(.975)), lty = 2 ,col = "blue")
+```
