@@ -32,7 +32,7 @@ I initailly ran the inisght test suite and once I got the correct result for tha
 
 I also wrote a sample unit test in (/.src/test.py) for a function that checks whether the input is valid for us to process the important fields from a given row. Ideally, I should have written unit tests for all the functions but that would have taken a lot longer.
 
-#Assumptions
+# Assumptions
 1) Time granularity is year: We do not care if a contributor donated earlier in the same year i.e. if a person contributes twice in the same year he/she will not be counted as a repeated donor the second time. The granulaity for being repeated is set to the year.
 2) Sorting operations: Sorting the data for a particular key will really not affect the time complexity since we will not have many values for the same key of (campign id, zip code, year), if not the time complexity would be    O(Nxmlogm) where m is the maximum number of entries for a particular key. But assuming N>>m gives us O(N).
 3) Refunds do not count: That we do not count refunds from a campign to count someone as a repeated repeated donor even though the donor is involved in another transaction when they get a refund from a particular campign that they have donated to.
