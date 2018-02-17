@@ -5,7 +5,7 @@
 
 
 # Introduction
-This is my submission for the Insight Data Engineering challenge,
+This is my submission for the Insight Data Engineering challenge.
 
 # Dependencies
 The only dependency to run this is having installed Python 2.7 
