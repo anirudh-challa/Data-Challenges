@@ -1,7 +1,7 @@
 # Table of Contents
 1. [Introduction](README.md#introduction)
 2. [Dependencies](README.md#Dependencies)
-3. [Dependencies](README.md#Running-the-Solution)
+3. [Running the Solution](README.md#Running-the-Solution)
 4. [Time Compexity](README.md#Time-Compexity)
 5. [Approach](README.md#Approach)
 6. [Testing](README.md#Testing) 
@@ -13,7 +13,7 @@ This is my submission for the Insight Data Engineering challenge.
 # Dependencies
 The only dependency to run this is having installed Python 2.7.
 
-#Running the Solution
+# Running the Solution
 The easiest way to run the code for a new set of inputs is to change the input files in ./input/
 The all you have to do is to run the run.sh file 
 
